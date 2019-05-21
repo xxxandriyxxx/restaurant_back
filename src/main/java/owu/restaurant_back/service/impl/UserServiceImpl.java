@@ -10,6 +10,7 @@ import owu.restaurant_back.service.UserService;
 
 import java.util.List;
 
+//@Service (value = "nameasdqwe")
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired

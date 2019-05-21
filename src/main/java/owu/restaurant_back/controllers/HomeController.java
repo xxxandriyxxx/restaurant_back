@@ -1,13 +1,12 @@
 package owu.restaurant_back.controllers;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 import owu.restaurant_back.models.User;
 import owu.restaurant_back.service.UserService;
+
 
 @Controller
 public class HomeController {
@@ -19,9 +18,17 @@ public class HomeController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/saveUser")
-    public String saveUser(User user){
+    public String saveUser(User user
+//                           ,@AuthenticationPrincipal Authentication authentication,
+//                           @AuthenticationPrincipal Principal principal,
+//                           @AuthenticationPrincipal UserDetails userDetails
+    ){
+//        System.out.println("1" + " " + authentication.getName());
+//        System.out.println("2" + " " + principal.getName());
+//        System.out.println("3" + " " + userDetails.getUsername());
+        System.out.println(user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.save(user);
-        return "redirect:/login";
+        return "redirect:/";
     }
 }

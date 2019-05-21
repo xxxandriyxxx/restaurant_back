@@ -1,5 +1,8 @@
 package owu.restaurant_back.models;
 
+//import lombok.Getter;
+//import lombok.Setter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +13,9 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
+//@Getter
+//@Setter
+@NoArgsConstructor
 public class User implements UserDetails {
 
     @Id
@@ -104,9 +110,21 @@ public class User implements UserDetails {
         authorities.add(new SimpleGrantedAuthority(role.name()));
 //        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 //        authorities.add(new SimpleGrantedAuthority("ROLE_ASDQWE"));
-
-
         return authorities;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                ", isAccountNonExpired=" + isAccountNonExpired +
+                ", isAccountNonLocked=" + isAccountNonLocked +
+                ", isCredentialsNonExpired=" + isCredentialsNonExpired +
+                ", isEnabled=" + isEnabled +
+                '}';
+    }
 }

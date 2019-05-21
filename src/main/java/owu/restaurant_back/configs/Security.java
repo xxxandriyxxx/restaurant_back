@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configurers.provisioning.InMemoryUserDetailsManagerConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,15 +25,19 @@ import java.util.Arrays;
 @Configuration
 public class Security extends WebSecurityConfigurerAdapter {
 
-    @Qualifier("userServiceImpl")
-    @Autowired
-    UserDetailsService userDetailsService;
+
 
 //    @Override
 //    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.inMemoryAuthentication().withUser("admin").password("{noop}admin").roles("ADMIN");
 //        auth.inMemoryAuthentication().withUser("user").password("{noop}user").roles("USER");
 //    }
+
+
+//    @Qualifier("nameasdqwe")
+    @Qualifier("userServiceImpl")
+    @Autowired
+    UserDetailsService userDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -59,7 +65,7 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers("/get").authenticated()
-                .antMatchers("/get").hasRole("USER")
+//                .antMatchers("/get").hasRole("USER")
 //                .antMatchers(HttpMethod.POST, "/upload").hasRole("ADMIN")
 
                 // ??? лекція aws docker 15:51 є ще додаткові методи закоментовані
@@ -94,7 +100,23 @@ public class Security extends WebSecurityConfigurerAdapter {
     }
 
 
-
+    // back door ====================================================
+//    private InMemoryUserDetailsManagerConfigurer<AuthenticationManagerBuilder> inMemoryConfigurer() {
+//        return new InMemoryUserDetailsManagerConfigurer<AuthenticationManagerBuilder>();
+//    }
+//
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth,
+//                                AuthenticationProvider provider) throws Exception {
+//        inMemoryConfigurer()
+//                .withUser("admin")
+//                .password("{noop}admin")
+//                .authorities("ADMIN")
+//                .and()
+//                .configure(auth);
+//        auth.authenticationProvider(provider);
+//    }
+// back door ====================================================
 
 
 }
