@@ -1,11 +1,5 @@
 package owu.restaurant_back.models;
 
-
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,11 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Entity(name = "Users")
-@Getter
-@Setter
-@NoArgsConstructor
-//@FieldDefaults(level = AccessLevel.PRIVATE)
+@Entity
 public class User implements UserDetails {
 
     @Id
@@ -31,38 +21,76 @@ public class User implements UserDetails {
     private String email;
     @Enumerated(EnumType.STRING)
     private Role role = Role.ROLE_USER;
+    private boolean isAccountNonExpired = true;
+    private boolean isAccountNonLocked = true;
+    private boolean isCredentialsNonExpired = true;
+    private boolean isEnabled = true;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(role.name())); //ROLE_USER
-        authorities.add(new SimpleGrantedAuthority("ADMIN")); //ROLE_USER
-        return authorities;
+    public int getId() {
+        return id;
     }
 
-    private boolean isAccountNonExpired = true;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        isAccountNonExpired = accountNonExpired;
+    }
 
     @Override
     public boolean isAccountNonExpired() {
         return isAccountNonExpired;
     }
 
-    private boolean isAccountNonLocked = true;
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        isAccountNonLocked = accountNonLocked;
+    }
 
     @Override
     public boolean isAccountNonLocked() {
         return isAccountNonLocked;
     }
 
-    private boolean isCredentialsNonExpired = true;
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        isCredentialsNonExpired = credentialsNonExpired;
+    }
 
     @Override
     public boolean isCredentialsNonExpired() {
         return isCredentialsNonExpired;
     }
 
-    private boolean isEnabled = true;
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
 
     @Override
     public boolean isEnabled() {
@@ -70,17 +98,15 @@ public class User implements UserDetails {
     }
 
     @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", role=" + role +
-                ", isAccountNonExpired=" + isAccountNonExpired +
-                ", isAccountNonLocked=" + isAccountNonLocked +
-                ", isCredentialsNonExpired=" + isCredentialsNonExpired +
-                ", isEnabled=" + isEnabled +
-                '}';
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(role.name()));
+//        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+//        authorities.add(new SimpleGrantedAuthority("ROLE_ASDQWE"));
+
+
+        return authorities;
     }
+
 }
