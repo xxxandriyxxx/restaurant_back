@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.authentication.configurers.provisioning.InMemoryUserDetailsManagerConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -71,8 +72,20 @@ public class Security extends WebSecurityConfigurerAdapter {
                 // ??? лекція aws docker 15:51 є ще додаткові методи закоментовані
 
                 .and()
+
                 // We filter the api/login requests
                 // And filter other requests to check the presence of JWT in header
+                .httpBasic() // support of basic http configuration
+                .realmName("MY_TEST_REALM")
+                // setting if auth failed customBasicAuthEntryPoint() must be define
+//                .authenticationEntryPoint(customBasicAuthEntryPoint())
+                //if We don't need sessions to be created.
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+
+
+
                 .addFilterBefore(new RequestProcessingJWTFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new LoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class);
 
