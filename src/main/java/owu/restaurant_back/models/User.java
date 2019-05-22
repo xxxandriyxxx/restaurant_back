@@ -26,7 +26,7 @@ public class User implements UserDetails {
     private String password;
     private String email;
     @Enumerated(EnumType.STRING)
-    private Role role = Role.ROLE_USER;
+    private Role role;
     private boolean isAccountNonExpired = true;
     private boolean isAccountNonLocked = true;
     private boolean isCredentialsNonExpired = true;
@@ -66,6 +66,14 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public void setAccountNonExpired(boolean accountNonExpired) {

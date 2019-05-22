@@ -23,15 +23,20 @@ public class MainController {
 //        return "home";
 //    }
 
-    @PostMapping("/save")
-    public @ResponseBody
-    String home(@RequestParam String username,
-                       @RequestParam String password) {
+    @PostMapping("/saveUser")
+    public String saveUser(@RequestBody User user
+//            @RequestParam("username") String username,
+//                @RequestParam ("password")String password
+    ) {
 //        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
+//        System.out.println("username = " + username);
+//        System.out.println("password = " + password);
+//
+//        User user = new User();
+//        user.setUsername(username);
+//        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.save(user);
         return user.toString();
     }

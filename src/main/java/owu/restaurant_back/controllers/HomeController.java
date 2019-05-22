@@ -17,8 +17,8 @@ public class HomeController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostMapping("/saveUser")
-    public String saveUser(User user
+    @PostMapping("/save")
+    public String save(User user
 //                           ,@AuthenticationPrincipal Authentication authentication,
 //                           @AuthenticationPrincipal Principal principal,
 //                           @AuthenticationPrincipal UserDetails userDetails
